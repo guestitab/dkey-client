@@ -1,0 +1,49 @@
+plugins:
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - vendor/**/*
+    - tmp/**/*
+    - spec/fixtures/**/*
+
+Layout/LineLength:
+  Max: 180
+
+Style/Documentation:
+  Enabled: false
+
+# Inline RBS sigils (`#:`) are comments without a leading space.
+Layout/LeadingCommentSpace:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# The gem is named dkey-client, so Bundler requires lib/dkey-client.rb.
+Naming/FileName:
+  Exclude:
+    - lib/dkey-client.rb
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+  CountRepeatedAttributes: false
+
+Metrics/MethodLength:
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+
+Style/Lambda:
+  EnforcedStyle: literal

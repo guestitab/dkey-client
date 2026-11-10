@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://test.telkey.com/api/v2/lock/codecard
+    body:
+      encoding: UTF-8
+      string: '{"valid_from":"2026-08-01T12:00:00Z","valid_to":"2026-08-02T12:00:00Z","locks":["DEMOLOCK"],"label":"Guest","key_type":0}'
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v2.14.3
+      X-User-Id:
+      - "[TELKEY_API_KEY]"
+      X-Auth-Token:
+      - "[TELKEY_AUTH_TOKEN]"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 06 Jul 2026 06:30:47 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '97'
+      Connection:
+      - keep-alive
+      X-Request-Id:
+      - 808fa2f6fdaca8bb52b5394d81bf01c8
+      Strict-Transport-Security:
+      - max-age=15724800; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"data":{"link":"https://test.telkey.com/a/00001111222233334444555566667777"},"status":"success"}'
+  recorded_at: Mon, 06 Jul 2026 06:30:47 GMT
+recorded_with: VCR 6.4.0

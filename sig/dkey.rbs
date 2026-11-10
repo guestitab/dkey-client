@@ -1,0 +1,92 @@
+# Public API of the gem, mirroring the inline `# @rbs` annotations in lib/.
+# Shipped with the gem so host apps pick it up through `rbs collection`.
+module Dkey
+  VERSION: ::String
+
+  BASE_URL: ::String
+  CONNECTION_LEVEL_ERRORS: ::Array[untyped]
+  RETRY_OPTIONS: ::Hash[::Symbol, untyped]
+
+  def self.configure: () { (Config) -> void } -> void
+  def self.config: () -> Config
+
+  def self.connection: () -> untyped
+  def self.request: (::Symbol method, ::String path, ?params: untyped, ?headers: ::Hash[::String, ::String]) -> untyped
+  def self.client_id: () -> ::String
+  def self.secret: () -> ::String
+
+  class Error < ::StandardError
+  end
+
+  # Raised by operations before any network call when the arguments are unusable.
+  class ArgumentError < Error
+  end
+
+  # A rejected Telkey response; #unapplied? marks a write that never landed.
+  class ApiError < Error
+    attr_reader status: ::Integer
+
+    def initialize: (::String message, status: ::Integer) -> void
+
+    def unapplied?: () -> bool
+  end
+
+  class Config
+    attr_accessor client_id: ::String?
+    attr_accessor secret: ::String?
+    attr_accessor unit_id: ::String?
+    attr_accessor base_url: ::String
+    attr_accessor timeout: (::Integer | ::Float)?
+    attr_accessor token_store: untyped
+  end
+
+  class MemoryTokenStore
+    class Token
+      attr_accessor access_token: ::String
+      attr_accessor expires_at: untyped
+
+      def expired?: () -> bool
+    end
+
+    def read: () -> Token?
+    def save: (access_token: ::String, expires_at: untyped) -> Token
+  end
+
+  # #call! returns the same Result as #call, raising the failure instead of
+  # wrapping it — hence the `alias call! call` on every operation below.
+  module Operation
+    def call!: (*untyped, **untyped) -> untyped
+  end
+
+  module AccessTokens
+    class Upsert
+      TOKEN_TTL: ::ActiveSupport::Duration
+
+      def call: () -> ::Dry::Monads::Result[untyped]
+      alias call! call
+    end
+  end
+
+  module AccessGrants
+    KIND_TIME_CONTROLLED: ::String
+
+    class Create
+      def call: (attributes: ::Hash[::Symbol, untyped]) -> ::Dry::Monads::Result[::Hash[::Symbol, untyped]]
+      alias call! call
+    end
+
+    class Delete
+      def call: (attributes: ::Hash[::Symbol, untyped]) -> ::Dry::Monads::Result[bool]
+      alias call! call
+    end
+  end
+
+  module Locks
+    class Index
+      STATUS_ONLINE: ::String
+
+      def call: () -> ::Dry::Monads::Result[::Array[::Hash[::Symbol, untyped]]]
+      alias call! call
+    end
+  end
+end

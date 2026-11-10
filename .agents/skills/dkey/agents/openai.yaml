@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dkey"
+  short_description: "Dkey (Telkey) API behaviour"
+  default_prompt: "Use $dkey before changing an endpoint, auth or retries."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write provider"
+  short_description: "Add or change a Telkey endpoint"
+  default_prompt: "Use $write-provider before adding or changing a Telkey endpoint."
